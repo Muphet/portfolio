@@ -25,17 +25,18 @@ const closeModal = () => {
         View Project
       </nuxt-link>
     </div>
-    <img class="w-full" :src="project.image" alt="" />
+    <Nuxt-img class="w-full" :src="project.image" alt="" />
   </div>
   <Teleport to="body">
     <Modal :show="open" @close="closeModal">
-      <template #header>
-        <a class="bg-slate-700 px-2 py-1 rounded flex items-center space-x-1" href="#prog">
+      <template #header v-if="project.source">
+        <a :href="project.source"
+        class="bg-slate-700 px-2 py-1 rounded flex items-center space-x-1">
           <Icon name="ri:github-fill" />
           <span>Source code</span>
         </a>
       </template>
-      <ContentDoc />
+      <ContentDoc unwrap="p"/>
     </Modal>
   </Teleport>
 </template>

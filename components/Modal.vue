@@ -17,9 +17,8 @@ import { onClickOutside } from '@vueuse/core'
   <Transition name="modal">
     <div v-if="show" class="modal-mask">
       <div class="modal-container" ref="modalRef">
-        <div id="progress" />
         <div class="modal-header">
-          <slot name="header"></slot>
+          <div><slot name="header"></slot></div>
           <button @click="closeModal" class="hover:bg-slate-700 rounded-lg grid items-center">
             <Icon name="mdi:close" size="32"/>
           </button>
@@ -41,7 +40,7 @@ import { onClickOutside } from '@vueuse/core'
   @apply flex w-full items-center justify-between p-2;
 }
 .modal-container {
-  @apply max-w-screen-lg m-auto bg-slate-800 rounded-lg shadow-lg transition-all relative;
+  @apply max-w-screen-md m-auto bg-slate-800 rounded-lg shadow-lg transition-all relative;
 }
 .modal-body {
   @apply m-2 flex flex-col;

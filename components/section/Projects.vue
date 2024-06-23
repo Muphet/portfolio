@@ -12,7 +12,7 @@ const projects = ref<Project[]>([
   {
     title: "This portfolio",
     id: "portfolio",
-    image: "/progofe.png",
+    image: "/portfolio.png",
     source: "https://github.com",
     description: "Overengineered portfolio built with Nuxt3, Tailwindcss, TypeScript and Pinia."
   },
