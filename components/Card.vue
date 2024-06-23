@@ -1,28 +1,51 @@
-<template>
-	<div class="bg-slate-700 p-4 rounded-lg shadow-md max-w-md">
-		<div class="mb-4">
-			<p class="text-slate-100">Just another day with adorable kittens!</p>
-		</div>
-		<div class="mb-4">
-			<div class="w-full h-48 bg-gradient-to-tl from-purple-700 via-blue-500 to-green-500 rounded-md"></div>
-		</div>
-		<div class="flex items-center justify-between text-slate-500">
-			<div class="flex items-center space-x-2">
-				<button class="flex justify-center items-center gap-2 px-2 hover:bg-gray-50 rounded-full p-1">
-					<Icon name="prime:heart-fill" />
-					<span>42 Likes</span>
-				</button>
-			</div>
-			<button class="flex justify-center items-center gap-2 px-2 hover:bg-gray-50 rounded-full p-1">
-				<Icon name="mingcute:comment-fill" />
-				<span>3 Comment</span>
-			</button>
-		</div>
-	</div>
-</template>
-
 <script lang="ts" setup>
+import type { Project } from '~/types/project';
+const router = useRouter();
+defineProps<{
+  project: Project
+}>()
 
+const open = ref(false)
+
+const closeModal = () => {
+  open.value = false
+  router.replace('/')
+}
 </script>
 
-<style></style>
+<template>
+  <div class="w-full h-fit relative group">
+    <div
+      class="transition-all w-full h-0 overflow-hidden group-hover:h-full flex flex-col justify-center items-center absolute rounded-lg bg-interface-100 bg-opacity-80">
+      <h2 class="text-white text-center text-[28px] font-semibold px-10">
+        {{ project.title }}
+      </h2>
+      <nuxt-link :to="`/projects/${project.id}`" @click="open = true"
+        class="mt-8 border border-seagreen-500 rounded-md px-8 py-2 text-sm text-green-400 gallery">
+        View Project
+      </nuxt-link>
+    </div>
+    <img class="w-full" :src="project.image" alt="" />
+  </div>
+  <Teleport to="body">
+    <Modal :show="open" @close="closeModal">
+      <template #header>
+        <a class="bg-slate-700 px-2 py-1 rounded flex items-center space-x-1" href="#prog">
+          <Icon name="ri:github-fill" />
+          <span>Source code</span>
+        </a>
+      </template>
+      <ContentDoc />
+    </Modal>
+  </Teleport>
+</template>
+
+<style scoped>
+.modal {
+  @apply fixed z-40 inset-0 w-full h-full bg-black/25 grid items-center justify-center p-12 overflow-y-scroll;
+}
+
+.modal-inner {
+  @apply flex max-w-screen-lg bg-slate-900 text-neutral-100 rounded-lg z-50 h-auto p-12 flex-col;
+}
+</style>

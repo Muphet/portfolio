@@ -1,97 +1,55 @@
+<script setup lang="ts">
+import { vIntersectionObserver } from '@vueuse/components'
+const currentView = ref<string>("home");
+const home = ref<HTMLElement | null>(null)
+const about = ref<HTMLElement | null>(null)
+const projects = ref<HTMLElement | null>(null)
+const contact = ref<HTMLElement | null>(null)
+const refs: Record<string, Ref<HTMLElement | null>> = {home, about, projects, contact};
+
+const scrollTo = (refName: string) => {
+  if (refName in refs) {
+    const {$el} = refs[refName as keyof typeof refs].value;
+    if ($el) {
+      $el.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+}
+
+function onIntersectionObserver([{ isIntersecting, target }]: IntersectionObserverEntry[]) {
+  if (isIntersecting) currentView.value = target.id
+}
+
+</script>
+
 <template>
-  <div class="wrapper">
-    <div class="fixed-profile p-8">
-      <Profile />
-    </div>
-
-    <div class="scrollable-content p-8">
-      <article>
-        <div class="bg-slate-700 text-white px-4 py-2 rounded-full inline-flex items-center">
-          <Icon name="prime:home" size="24" />
-          <span>Introduction</span>
-        </div>
-        <h2 class="text-7xl font-bold mb-4">Every great application begins with an even better story</h2>
-        <p class="mb-6">Since beginning my journey as a frontend developer nearly 8 years ago, I've done work for real
-          estete agency, designed and implemented both frontend and backend applications to ease our job. I'm quietly
-          confident, naturally curious, and perpetually working on improving my programming skills.</p>
-      </article>
-
-      <article class="mt-8">
-        <div class="bg-slate-700 text-white px-4 py-2 rounded-full inline-flex items-center">
-          <Icon name="prime:home" size="24" />
-          <span>Resume</span>
-        </div>
-        <h2 class="text-3xl font-bold mb-4">Education & Experience</h2>
-        <div class="border-l-4 border-gray-700 pl-4">
-          <div class="mb-4">
-            <h3 class="text-xl font-semibold">IT Specialist, Fullstack</h3>
-            <p class="text-gray-400">Karpackie Centrum Obsługi Inwestycji</p>
-            <p class="text-gray-500">2018 - 2023</p>
-          </div>
-          <div class="mb-4">
-            <h3 class="text-xl font-semibold">IT Specialist, Frontend</h3>
-            <p class="text-gray-400">NT Solutions Sp. z o.o.</p>
-            <p class="text-gray-500">2015 - 2018</p>
+  <div class="max-h-screen h-screen">
+    <div style="background: url('/images/bg.png')"
+      class="flex justify-center items-center bg-no-repeat box-border bg-cover h-full relative pb-[68px]">
+      <div class="container h-full w-full box-border relative pt-[72px] pb-6 sm:pt-[105px] sm:pb-[37px]">
+        <Navbar />
+        
+        <div class="w-full relative flex justify-center items-center top-24 h-[50vh] min-h-[640px] flex-shrink-0 px-3 sm:px-8 lg:px-12 2xl:px-0">
+          <div class="w-full max-w-[1320px] relative rounded-xl lg:rounded-3xl bg-[#121B30] flex items-center h-full">
+            <Sidenav @scroll="scrollTo" :currentView="currentView"/>
+            <div class="h-full w-full rounded-xl lg:rounded-3xl overflow-hidden">
+              <section
+                class="sm:snap-mandatory sm:snap-y pl-5 sm:pl-12 xl:pl-[90px] pb-[78px] h-full overflow-x-hidden overflow-y-scroll scroll-smooth"
+                id="main" ref="scroll">
+                <SectionHome ref="home" id="home" v-intersection-observer="[onIntersectionObserver, { threshold: 0.5 }]"/>
+                <SectionAbout ref="about" id="about" v-intersection-observer="[onIntersectionObserver, { threshold: 0.5 }]"/>
+                <SectionProjects ref="projects" id="projects" v-intersection-observer="[onIntersectionObserver, { threshold: 0.35 }]"/>
+                <SectionContact ref="contact" id="contact" v-intersection-observer="[onIntersectionObserver, { threshold: 0.5 }]"/>
+                <Footer class="sm:hidden" />
+              </section>
+            </div>
           </div>
         </div>
-      </article>
-
-      <article class="mt-8">
-        <div class="bg-slate-700 text-white px-4 py-2 rounded-full inline-flex items-center">
-          <Icon name="prime:images" size="24" />
-          <span>Portfolio</span>
-        </div>
-        <div class="mt-4 grid grid-cols-2 gap-2">
-          <Card v-for="i in 4"/>
-        </div>
-      </article>
-
-      <article class="mt-8">
-        <div class="bg-slate-700 text-white px-4 py-2 rounded-full inline-flex items-center">
-          <Icon name="prime:address-book" size="24" />
-          <span>Contact</span>
-        </div>
-        <div>
-          form
-        </div>
-      </article>
+      </div>
     </div>
+    <footer class="w-full absolute bottom-0 flex justify-center items-center bg-[#050F25] border-t border-[#121B30]">
+      <Footer class="hidden sm:flex" />
+      <Sidenav horizontal @scroll="scrollTo" :currentView="currentView"/>
+    </footer>
   </div>
 </template>
-
-<style>
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.fixed-profile {
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 30%;
-  overflow: hidden;
-}
-
-.scrollable-content {
-  margin-left: 30%;
-  height: 100vh;
-  overflow-y: auto;
-  width: 70%;
-}
-
-@media (max-width: 1024px) {
-  .fixed-profile {
-    position: relative;
-    width: 100%;
-    height: auto;
-  }
-
-  .scrollable-content {
-    margin-left: 0;
-    width: 100%;
-  }
-}
-</style>
