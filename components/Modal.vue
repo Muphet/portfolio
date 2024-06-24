@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { onClickOutside } from '@vueuse/core'
-  defineProps({
+  defineProps<{
     show: Boolean
-  })
+  }>();
   const emit = defineEmits(['close'])
   const closeModal = () => emit('close');
   const modalRef = ref(null)

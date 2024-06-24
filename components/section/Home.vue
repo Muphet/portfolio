@@ -1,3 +1,12 @@
+<script setup lang="ts">
+const emit = defineEmits<{
+  (event: 'scroll', refName: string): void
+}>();
+const scrollToView = (refName: string) => {
+  emit('scroll', refName)
+}
+</script>
+
 <template>
   <div
     class="snap-start snap-always slide-sec mx-auto lg:max-w-7xl pt-8 lg:pt-14 pr-5 xl:pr-[61px] overflow-hidden animate">
@@ -18,21 +27,20 @@
           Frontend developer specialized in Vue.js
         </p>
         <div class="flex flex-col sm:flex-row sm:items-center gap-8 mt-10">
-          <a href="#"
+          <button @click="scrollToView('contact')"
             class="hidden bg-green-400 text-interface-100 px-6 py-4 rounded-lg lg:inline-flex justify-center items-center hover:bg-seagreen-600 font-medium transition-all">
             <span>Hire Me</span>
             <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M14 16.5L18 12.5M18 12.5L14 8.5M18 12.5L6 12.5" stroke="#04091E" stroke-width="1.5"
                 stroke-linecap="round" stroke-linejoin="round"></path>
             </svg>
-          </a>
-
+          </button>
         </div>
         <div class="pt-14">
           <p class="text-base text-interface-200 flex items-center flex-wrap gap-1">
             I am currently
             <span class="text-green-400 font-semibold text-xl flex items-center">looking for a job</span>
-            .
+            as frontend developer.
           </p>
         </div>
       </div>
@@ -71,199 +79,114 @@
 
 <style scoped>
 .orbit {
-  float: left;
-  width: 100%;
-  min-width: 40vw;
-  min-height: 40vh;
+  @apply float-left w-full min-w-[40vw] min-h-[40vh];
 }
-
 .orbit-icon {
-  width: 1.6em;
-  height: 1.6em;
+  @apply size-[1.6em] text-[1.2em] block rounded-full;
   line-height: 1.6em;
-  font-size: 1.2em;
-  border-radius: 50%;
-  color: #fff;
-  text-align: center;
-  display: block;
 }
-
 .orbit-wrap {
-  height: 16em;
-  list-style: none;
-  font-size: 1.3em;
+  @apply list-none text-[1.3em] h-16;
 }
-
 .orbit-wrap>li {
-  position: absolute;
-  left: 50%;
-  top: 50%;
+  @apply absolute left-[50%] top-[50%];
   transform: translate(-50%, -50%);
 }
-
-.orbit-wrap>li:hover~li ul {
-  border-color: rgba(255, 255, 255, 0.2);
-}
-
-.orbit-wrap>li:hover~li ul li {
-  opacity: 0.4;
-}
-
 ul[class^=ring] {
-  transition: all 300ms ease-in-out;
+  @apply transition-all duration-300 ease-in-out;
 }
-
 ul[class^=ring] li {
-  transition: all 300ms ease-in-out;
+  @apply transition-all duration-300 ease-in-out;
 }
-
 .ring-1 {
-  width: 15em;
-  height: 15em;
+  @apply size-[15em];
   -webkit-animation: clockwiseRotate 30s linear infinite;
   animation: clockwiseRotate 30s linear infinite;
 }
-
 .ring-1 .orbit-icon {
   -webkit-animation: counterClockwiseRotate 30s linear infinite;
   animation: counterClockwiseRotate 30s linear infinite;
 }
-
 .ring-1>*:nth-of-type(1) {
   transform: rotate(47.5deg) translate(7.5em) rotate(-47.5deg);
 }
-
 .ring-1>*:nth-of-type(2) {
   transform: rotate(95deg) translate(7.5em) rotate(-95deg);
 }
-
 .ring-1>*:nth-of-type(3) {
   transform: rotate(142.5deg) translate(7.5em) rotate(-142.5deg);
 }
-
 .ring-1>*:nth-of-type(4) {
   transform: rotate(190deg) translate(7.5em) rotate(-190deg);
 }
-
 .ring-1>*:nth-of-type(5) {
   transform: rotate(237.5deg) translate(7.5em) rotate(-237.5deg);
 }
-
 .ring-1>*:nth-of-type(6) {
   transform: rotate(285deg) translate(7.5em) rotate(-285deg);
 }
-
 .ring-1>*:nth-of-type(7) {
   transform: rotate(332.5deg) translate(7.5em) rotate(-332.5deg);
 }
-
 .ring-1>*:nth-of-type(8) {
   transform: rotate(380deg) translate(7.5em) rotate(-380deg);
 }
-
 .ring-2 {
-  width: 10em;
-  height: 10em;
+  @apply size-[10em];
   -webkit-animation: clockwiseRotate 20s linear infinite;
   animation: clockwiseRotate 20s linear infinite;
 }
-
 .ring-2 .orbit-icon {
   -webkit-animation: counterClockwiseRotate 20s linear infinite;
   animation: counterClockwiseRotate 20s linear infinite;
 }
-
 .ring-2>*:nth-of-type(1) {
   transform: rotate(126.6666666667deg) translate(5em) rotate(-126.6666666667deg);
 }
-
 .ring-2>*:nth-of-type(2) {
   transform: rotate(253.3333333333deg) translate(5em) rotate(-253.3333333333deg);
 }
-
 .ring-2>*:nth-of-type(3) {
   transform: rotate(380deg) translate(5em) rotate(-380deg);
 }
-
 ul[class^=ring] {
-  border: solid 1px rgba(33, 150, 243, 0.8);
-  position: relative;
-  padding: 0;
-  border-radius: 50%;
-  list-style: none;
-  box-sizing: content-box;
+  @apply relative p-0 rounded-full list-none box-content border border-blue-500;
 }
-
 ul[class^=ring] li {
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 1.6em;
-  height: 1.6em;
-  margin: -0.8em;
+  @apply block absolute top-[50%] left-[50%] size-[1.6em] -m-[0.8em];
 }
-
-/*
-  center;
-*/
 .orbit-center {
-  z-index: 5;
-  font-size: 2em;
-  width: 2em;
-  height: 2em;
+  @apply z-10 text-[2em] size-[2em] text-center rounded-full;
   line-height: 2em;
-  text-align: center;
-  border-radius: 50%;
 }
-
-.orbit-center:hover .orbit-center__icon {
-  transform: rotateZ(0deg);
-}
-
-.orbit-center__icon {
-  transform: rotateZ(-360deg);
-  transition: all 300ms ease-in-out;
-}
-
-/* 
-animations 
-*/
 @-webkit-keyframes clockwiseRotate {
   from {
     transform: rotate(0deg);
   }
-
   to {
     transform: rotate(360deg);
   }
 }
-
 @keyframes clockwiseRotate {
   from {
     transform: rotate(0deg);
   }
-
   to {
     transform: rotate(360deg);
   }
 }
-
 @-webkit-keyframes counterClockwiseRotate {
   0% {
     transform: rotate(0deg);
   }
-
   100% {
     transform: rotate(-360deg);
   }
 }
-
 @keyframes counterClockwiseRotate {
   0% {
     transform: rotate(0deg);
   }
-
   100% {
     transform: rotate(-360deg);
   }

@@ -5,7 +5,7 @@ defineProps<{
   project: Project
 }>()
 
-const open = ref(false)
+const open = ref<boolean>(false)
 
 const closeModal = () => {
   open.value = false

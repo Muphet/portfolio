@@ -5,22 +5,22 @@
     </h2>
     <div class="flex w-full">
       <div class="mt-12 grid grid-cols-1 md:grid-cols-2 mx-auto gap-4">
-        <button class="btn">
+        <a href="mailto:marcinbuglewicz@gmail.com" target="_blank" class="btn">
           <Icon name="skill-icons:gmail-light" size="28" class="flex-shrink-0"/>
           marcinbuglewicz@gmail.com
-        </button>
-        <button class="btn">
+        </a>
+        <a href="https://www.linkedin.com/in/marcin-buglewicz-0727052b9/" target="_blank" class="btn">
           <Icon name="skill-icons:linkedin" size="28" class="flex-shrink-0"/>
           LinkedIn
-        </button>
-        <button class="btn">
+        </a>
+        <a href="https://github.com/Muphet" target="_blank" class="btn">
           <Icon name="skill-icons:github-light" size="28" class="flex-shrink-0"/>
           Github
-        </button>
-        <button class="btn">
+        </a>
+        <a href="/Marcin-Buglewicz-CV.pdf" target="_blank" class="btn">
           <Icon name="academicons:cv-square" size="28" class="flex-shrink-0"/>
           My CV
-        </button>
+        </a>
       </div>
     </div>
   </div>
