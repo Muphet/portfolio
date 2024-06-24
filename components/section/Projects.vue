@@ -5,7 +5,6 @@ const projects = ref<Project[]>([
     title: "Jobtrack-AI",
     id: "jobtrack",
     image: "/images/jobtrack.png",
-    preview: "https://jobtrack.muphet.com",
     description: "Job tracking app that uses GeminiAI API for NLP. Built with Nuxt3 and deployed with NuxtHub.",
     source: "https://github.com/muphet/jobtrack-ai"
   },
@@ -13,7 +12,7 @@ const projects = ref<Project[]>([
     title: "This portfolio",
     id: "portfolio",
     image: "/images/portfolio.png",
-    source: "https://github.com",
+    source: "https://github.com/Muphet/portfolio",
     description: "Overengineered portfolio built with Nuxt3, Tailwindcss, TypeScript and Pinia."
   },
   {
@@ -33,7 +32,6 @@ const projects = ref<Project[]>([
     title: "Echoes.gg",
     id: "echoes",
     image: "/images/echoes.png",
-    source: "https://github.com",
     description: "Fullstack social media platform built as mobile game tool featuring authentication with Express, real time graphql communication, complex max simulations, algolia search and more. Built primarily with Nuxt2, Vuex. Discontinued in 2020 after reaching 5000 MAU."
   }
 ])
