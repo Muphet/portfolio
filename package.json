@@ -12,6 +12,7 @@
   "dependencies": {
     "@nuxt/content": "^2.13.0",
     "@nuxt/image": "^1.7.0",
+    "@nuxthub/core": "^0.6.17",
     "@nuxtjs/color-mode": "^3.4.1",
     "nuxt": "^3.11.2",
     "nuxt-icon": "^0.6.10",
