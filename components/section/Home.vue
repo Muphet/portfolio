@@ -1,8 +1,10 @@
 <script setup lang="ts">
+const {gtag} = useGtag()
 const emit = defineEmits<{
   (event: 'scroll', refName: string): void
 }>();
 const scrollToView = (refName: string) => {
+  gtag('event', 'hire_me')
   emit('scroll', refName)
 }
 </script>
