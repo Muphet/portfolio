@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { vIntersectionObserver } from '@vueuse/components'
 const currentView = ref<string>("home");
 const home = ref<HTMLElement | null>(null)
 const about = ref<HTMLElement | null>(null)
 const projects = ref<HTMLElement | null>(null)
 const contact = ref<HTMLElement | null>(null)
-const refs: Record<string, Ref<HTMLElement | null>> = {home, about, projects, contact};
+const refs: Record<string, Ref<HTMLElement | null>> = { home, about, projects, contact };
+const {cookiesEnabled, cookiesEnabledIds, isConsentGiven, isModalActive, moduleOptions} = useCookieControl();
 
 const scrollTo = (refName: string) => {
-  if(!refName) return;
-  
+  if (!refName) return;
+
   if (refName in refs) {
-    const {$el} = refs[refName as keyof typeof refs].value;
+    const { $el } = refs[refName as keyof typeof refs].value;
     if ($el) {
       $el.scrollIntoView({ behavior: 'smooth' })
     }
@@ -21,26 +21,61 @@ const scrollTo = (refName: string) => {
 function onIntersectionObserver([{ isIntersecting, target }]: IntersectionObserverEntry[]) {
   if (isIntersecting) currentView.value = target.id
 }
+
+function allConsentGranted() {
+  const {gtag} = useGtag()
+  gtag('consent', 'update', {
+    ad_user_data: 'granted',
+    ad_personalization: 'granted',
+    ad_storage: 'granted',
+    analytics_storage: 'granted'
+  })
+}
+
+watch(
+  () => cookiesEnabledIds.value,
+  (current, previous) => {
+    if(
+      !previous?.includes('google-analytics') &&
+      current?.includes('google-analytics')
+    ) {
+      window.location.reload()
+      allConsentGranted()
+    }
+  },
+  { deep: true }
+)
 </script>
 
 <template>
+  <CookieControl locale="en">
+    <template #modal>
+      <h2>Cookies</h2>
+      <p>consent to analytics</p>
+    </template>
+  </CookieControl>
   <div class="max-h-screen h-screen">
     <div style="background: url('/images/bg.png')"
       class="flex justify-center items-center bg-no-repeat box-border bg-cover h-full relative pb-[68px]">
       <div class="container h-full w-full box-border relative pt-[72px] pb-6 sm:pt-[105px] sm:pb-[37px]">
-        <Navbar/>
-        
-        <div class="w-full relative flex justify-center items-center top-8 xl:top-24 h-[50vh] min-h-[640px] flex-shrink-0 px-3 sm:px-8 lg:px-12 2xl:px-0">
+        <Navbar />
+
+        <div
+          class="w-full relative flex justify-center items-center top-8 xl:top-24 h-[50vh] min-h-[640px] flex-shrink-0 px-3 sm:px-8 lg:px-12 2xl:px-0">
           <div class="w-full max-w-[1320px] relative rounded-xl lg:rounded-3xl bg-[#121B30] flex items-center h-full">
-            <Sidenav @scroll="scrollTo" :currentView="currentView"/>
+            <Sidenav @scroll="scrollTo" :currentView="currentView" />
             <div class="h-full w-full rounded-xl lg:rounded-3xl overflow-hidden">
               <section
                 class="sm:snap-mandatory sm:snap-y pl-5 sm:pl-12 xl:pl-[90px] pb-[78px] h-full overflow-x-hidden overflow-y-scroll scroll-smooth"
                 id="main" ref="scroll">
-                <SectionHome ref="home" id="home" v-intersection-observer="[onIntersectionObserver, { threshold: 0.5 }]" @scroll="scrollTo"/>
-                <SectionAbout ref="about" id="about" v-intersection-observer="[onIntersectionObserver, { threshold: 0.5 }]"/>
-                <SectionProjects ref="projects" id="projects" v-intersection-observer="[onIntersectionObserver, { threshold: 0.35 }]"/>
-                <SectionContact ref="contact" id="contact" v-intersection-observer="[onIntersectionObserver, { threshold: 0.5 }]"/>
+                <SectionHome ref="home" id="home" v-intersection-observer="[onIntersectionObserver, { threshold: 0.5 }]"
+                  @scroll="scrollTo" />
+                <SectionAbout ref="about" id="about"
+                  v-intersection-observer="[onIntersectionObserver, { threshold: 0.5 }]" />
+                <SectionProjects ref="projects" id="projects"
+                  v-intersection-observer="[onIntersectionObserver, { threshold: 0.35 }]" />
+                <SectionContact ref="contact" id="contact"
+                  v-intersection-observer="[onIntersectionObserver, { threshold: 0.5 }]" />
                 <Footer class="sm:hidden" />
               </section>
             </div>
@@ -50,7 +85,7 @@ function onIntersectionObserver([{ isIntersecting, target }]: IntersectionObserv
     </div>
     <footer class="w-full absolute bottom-0 flex justify-center items-center bg-[#050F25] border-t border-[#121B30]">
       <Footer class="hidden sm:flex" />
-      <Sidenav horizontal @scroll="scrollTo" :currentView="currentView"/>
+      <Sidenav horizontal @scroll="scrollTo" :currentView="currentView" />
     </footer>
   </div>
 </template>

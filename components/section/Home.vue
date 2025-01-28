@@ -27,7 +27,7 @@ const scrollToView = (refName: string) => {
           Frontend developer specialized in Vue.js
         </p>
         <div class="flex flex-col sm:flex-row sm:items-center gap-8 mt-10">
-          <button @click="scrollToView('contact')"
+          <button @click="scrollToView('contact')" id="hire_me"
             class="hidden bg-green-400 text-interface-100 px-6 py-4 rounded-lg lg:inline-flex justify-center items-center hover:bg-seagreen-600 font-medium transition-all">
             <span>Hire Me</span>
             <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
